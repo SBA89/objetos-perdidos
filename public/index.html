@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Registrar objeto encontrado · Objetos Perdidos</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="encabezado">
+    <div class="encabezado__contenido">
+      <div>
+        <p class="encabezado__universidad">Universidad Católica Luis Amigó</p>
+        <h1>Sistema de Gestión de Objetos Perdidos</h1>
+      </div>
+      <div id="barra-usuario" class="barra-usuario" hidden>
+        <span id="nombre-usuario"></span>
+        <button type="button" id="btn-salir" class="btn btn--secundario btn--chico">Cerrar sesión</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="contenedor">
+    <!-- INICIO DE SESIÓN -->
+    <section id="vista-login" class="tarjeta tarjeta--angosta" hidden>
+      <h2>Iniciar sesión</h2>
+      <p class="ayuda">Acceso para funcionarios autorizados.</p>
+      <div id="alerta-login" class="alerta" role="alert" hidden></div>
+      <form id="form-login" novalidate>
+        <div class="campo">
+          <label for="login-correo">Correo</label>
+          <input id="login-correo" type="email" autocomplete="username" required>
+        </div>
+        <div class="campo">
+          <label for="login-clave">Contraseña</label>
+          <input id="login-clave" type="password" autocomplete="current-password" required>
+        </div>
+        <button type="submit" id="btn-login" class="btn">Ingresar</button>
+      </form>
+    </section>
+
+    <!-- REGISTRO -->
+    <section id="vista-registro" hidden>
+      <div class="titulo-seccion">
+        <h2>Registrar objeto encontrado</h2>
+        <p class="ayuda">Los campos con <span class="req">*</span> son obligatorios. El estado inicial será <strong>Pendiente</strong>.</p>
+      </div>
+
+      <div id="alerta-registro" class="alerta" role="alert" hidden></div>
+
+      <!-- Confirmación -->
+      <div id="panel-exito" class="tarjeta exito" hidden>
+        <p class="exito__titulo">✔ Objeto registrado correctamente</p>
+        <p class="exito__etiqueta">ID generado</p>
+        <p id="exito-id" class="exito__id"></p>
+        <dl class="exito__datos">
+          <div><dt>Categoría</dt><dd id="exito-categoria"></dd></div>
+          <div><dt>Estado</dt><dd id="exito-estado"></dd></div>
+          <div><dt>Objeto</dt><dd id="exito-objeto"></dd></div>
+          <div><dt>Custodia</dt><dd id="exito-custodia"></dd></div>
+        </dl>
+        <p id="exito-tiempo" class="ayuda"></p>
+        <button type="button" id="btn-nuevo" class="btn">Registrar otro objeto</button>
+      </div>
+
+      <form id="form-registro" novalidate>
+        <fieldset class="tarjeta">
+          <legend>1. Datos del reportante</legend>
+          <div class="rejilla">
+            <div class="campo">
+              <label for="nombre">Nombre <span class="req">*</span></label>
+              <input id="nombre" name="nombre" type="text" maxlength="100" autocomplete="off">
+              <p class="error" id="err-nombre"></p>
+            </div>
+            <div class="campo">
+              <label for="apellido">Apellido <span class="req">*</span></label>
+              <input id="apellido" name="apellido" type="text" maxlength="100" autocomplete="off">
+              <p class="error" id="err-apellido"></p>
+            </div>
+            <div class="campo">
+              <label for="correo">Correo electrónico</label>
+              <input id="correo" name="correo" type="email" maxlength="100" autocomplete="off">
+              <p class="error" id="err-correo"></p>
+            </div>
+            <div class="campo">
+              <label for="telefono">Teléfono</label>
+              <input id="telefono" name="telefono" type="tel" maxlength="30" autocomplete="off">
+              <p class="error" id="err-telefono"></p>
+            </div>
+            <div class="campo">
+              <label for="tipoPersona">Tipo de persona <span class="req">*</span></label>
+              <select id="tipoPersona" name="tipoPersona"></select>
+              <p class="error" id="err-tipoPersona"></p>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="tarjeta">
+          <legend>2. Datos del objeto</legend>
+          <div class="rejilla">
+            <div class="campo">
+              <label for="categoria">Categoría <span class="req">*</span></label>
+              <select id="categoria" name="categoria"></select>
+              <p class="error" id="err-categoria"></p>
+            </div>
+            <div class="campo">
+              <label for="tipoObjeto">Tipo o nombre del objeto <span class="req">*</span></label>
+              <input id="tipoObjeto" name="tipoObjeto" type="text" maxlength="150" placeholder="Ej.: Celular, carné, termo" autocomplete="off">
+              <p class="error" id="err-tipoObjeto"></p>
+            </div>
+            <div class="campo">
+              <label for="lugarEncuentro">Lugar donde fue encontrado <span class="req">*</span></label>
+              <input id="lugarEncuentro" name="lugarEncuentro" type="text" maxlength="200" placeholder="Ej.: Biblioteca, piso 2" autocomplete="off">
+              <p class="error" id="err-lugarEncuentro"></p>
+            </div>
+            <div class="campo">
+              <label for="fechaHallazgo">Fecha del hallazgo <span class="req">*</span></label>
+              <input id="fechaHallazgo" name="fechaHallazgo" type="date">
+              <p class="error" id="err-fechaHallazgo"></p>
+            </div>
+            <div class="campo">
+              <label for="funcionarioResponsableId">Funcionario responsable <span class="req">*</span></label>
+              <select id="funcionarioResponsableId" name="funcionarioResponsableId"></select>
+              <p class="error" id="err-funcionarioResponsableId"></p>
+            </div>
+            <div class="campo campo--completo">
+              <label for="descripcion">Descripción</label>
+              <textarea id="descripcion" name="descripcion" rows="3" maxlength="1000" placeholder="Color, marca, señales particulares..."></textarea>
+              <p class="error" id="err-descripcion"></p>
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="acciones">
+          <button type="button" id="btn-limpiar" class="btn btn--secundario">Limpiar formulario</button>
+          <button type="submit" id="btn-guardar" class="btn">Registrar objeto</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="pie">Módulo académico · Arquitectura de Sistemas</footer>
+  <script src="app.js"></script>
+</body>
+</html>
